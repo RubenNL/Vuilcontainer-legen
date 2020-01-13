@@ -1,0 +1,17 @@
+<div id="map" style="width: 50%; height: 100%; float: right;"></div>
+<script>
+	setTimeout(function () {
+		L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
+		map = L.mapquest.map('map', {
+			center: [52.177439, 5.278999],
+			layers: L.mapquest.tileLayer('map'),
+			zoom: 10
+		});
+		L.marker([0,0]).addTo(map);
+	},1000)
+	function addMarker(lat,lng,color) {
+		L.marker([lat,lng]).addTo(map);
+	}
+</script>
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js" onload="startmap"></script>
+<link rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css">
