@@ -1,6 +1,24 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css">
+<table id="list" style="max-width:50%; float: left;">
+	<tr><th>Adres</th><th>inhoud</th></tr>
+</table>
 <div id="map" style="width: 50%; height: 100%; float: right;"></div>
 <script>
-	setTimeout(function () {
+	function inhoudToString(inhoud) {
+		if(inhoud<33) return "Leeg"
+		else if(inhoud<66) return "Halfvol"
+		else if(inhoud<80) return "Bijna vol"
+		else return "Vol"
+	}
+	$.get('testData.json',function (containers) {
+		containers.forEach(function(container) {
+			$('#list').append('<tr><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td></tr>')
+		
+		})
+	})
+	/*setTimeout(function () {
 		L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
 		map = L.mapquest.map('map', {
 			center: [52.177439, 5.278999],
@@ -8,7 +26,7 @@
 			zoom: 10
 		});
 		L.marker([0,0]).addTo(map);
-	},1000)
+	},1000) 
 	function addMarkerToMap(lat,lng,color) {
 		const markerHtmlStyles = `
 			background-color: ${color};
@@ -30,12 +48,7 @@
 			html: `<span style="${markerHtmlStyles}" />`
 		})
 		L.marker([lat,lng],{icon:icon}).addTo(map);
-	}
-	function testDensity() {
-		for(x=0;x<14;x++) {
-			for(y=0;y<14;y++) addMarkerToMap(52+0.001*x,4+0.001*y,'red')
-		}
-	}
+	}*/
 </script>
 <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js" onload="startmap"></script>
 <link rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css">
