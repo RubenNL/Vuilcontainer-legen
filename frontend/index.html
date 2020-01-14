@@ -9,8 +9,27 @@
 		});
 		L.marker([0,0]).addTo(map);
 	},1000)
-	function addMarker(lat,lng,color) {
-		L.marker([lat,lng]).addTo(map);
+	function addMarkerToMap(lat,lng,color) {
+		const markerHtmlStyles = `
+			background-color: ${color};
+			width: 2rem;
+			height: 2rem;
+			display: block;
+			left: -1rem;
+			top: -1rem;
+			position: relative;
+			border-radius: 1rem 1rem 0;
+			transform: rotate(45deg);
+			border: 1px solid #FFFFFF`
+
+		const icon = L.divIcon({
+			className: "container-pin",
+			iconAnchor: [0, 24],
+			labelAnchor: [-6, 0],
+			popupAnchor: [0, -24],
+			html: `<span style="${markerHtmlStyles}" />`
+		})
+		L.marker([lat,lng],{icon:icon}).addTo(map);
 	}
 </script>
 <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js" onload="startmap"></script>
