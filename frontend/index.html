@@ -31,6 +31,11 @@
 		})
 		L.marker([lat,lng],{icon:icon}).addTo(map);
 	}
+	function testDensity() {
+		for(x=0;x<14;x++) {
+			for(y=0;y<14;y++) addMarkerToMap(52+0.001*x,4+0.001*y,'red')
+		}
+	}
 </script>
 <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js" onload="startmap"></script>
 <link rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css">
