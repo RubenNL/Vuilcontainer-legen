@@ -1,13 +1,25 @@
+<style type="text/css">
+td,th
+{
+    padding:0 15px 0 15px;
+}
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css">-->
 <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
 <link rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css">
 <table id="list" style="max-width:50%; float: left;">
-	<tr><th>Adres</th><th>inhoud</th></tr>
+	<tr><th>Adres</th><th>Inhoud</th></tr>
 </table>
 <div id="map" style="width: 50%; height: 100%; float: right;"></div>
 <script>
+	L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
+	map = L.mapquest.map('map', {
+		center: [52.177439, 5.278999],
+		layers: L.mapquest.tileLayer('map'),
+		zoom: 10
+	});
 	function inhoudToString(inhoud) {
 		if(inhoud<33) return "Leeg"
 		else if(inhoud<66) return "Halfvol"
@@ -48,10 +60,4 @@
 			addMarker(container.lat,container.lng,inhoudToColor(container.inhoud))
 		})
 	})
-	L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
-	map = L.mapquest.map('map', {
-		center: [52.177439, 5.278999],
-		layers: L.mapquest.tileLayer('map'),
-		zoom: 10
-	});
 </script>
