@@ -42,6 +42,7 @@ db.serialize(function() {
 				callback({status:'ERR'})
 			} else callback({status:'OK'})
 		});
+	}
 	db.run(`
 		CREATE TABLE IF NOT EXISTS "containers" (
 			"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
