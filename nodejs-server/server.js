@@ -4,7 +4,7 @@ var db = new sqlite3.Database('database.db');
 db.serialize(function() {
 	function update(inhoud,id,callback) {
 		console.log(inhoud,id)
-		db.run("UPDATE containers SET inhoud = ?, updateTime=datetime('now') WHERE id = ?",[parseInt(inhoud),parseInt(id)],function (err) {
+		db.run("UPDATE containers SET inhoud = ?, updateTime=datetime('now','localtime') WHERE id = ?",[parseInt(inhoud),parseInt(id)],function (err) {
 			if(err) {
 				console.log('error updating',err,inhoud,id)
 				callback({status:'ERR'})
