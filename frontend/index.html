@@ -54,7 +54,7 @@ td,th
 		else if(inhoud<80) return "orange"
 		else return "red"
 	}
-	$.get('/python',function (containers) {
+	$.get('/nodejs',function (containers) {
 		containers.forEach(function(container) {
 			$('#list').append('<tr><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td></tr>')
 			addMarker(container.lat,container.lng,inhoudToColor(container.inhoud))
