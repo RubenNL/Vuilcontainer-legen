@@ -10,7 +10,7 @@ td,th
 <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
 <link rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css">
 <table id="list" style="max-width:50%; float: left;">
-	<tr><th>Adres</th><th>Inhoud</th></tr>
+	<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>
 </table>
 <div id="map" style="width: 50%; height: 100%; float: right;"></div>
 <script>
@@ -56,7 +56,7 @@ td,th
 	}
 	$.get('/nodejs',function (containers) {
 		containers.forEach(function(container) {
-			$('#list').append('<tr><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td></tr>')
+			$('#list').append('<tr><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>')
 			addMarker(container.lat,container.lng,inhoudToColor(container.inhoud))
 		})
 	})
