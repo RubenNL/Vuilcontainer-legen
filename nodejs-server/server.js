@@ -30,8 +30,8 @@ db.serialize(function() {
 	db.run(`
 		CREATE TABLE IF NOT EXISTS "containers" (
 			"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-			"lat"	NUMERIC NOT NULL,
-			"lng"	NUMERIC NOT NULL,
+			"lat"	DECIMAL(3, 5) NOT NULL,
+			"lng"	DECIMAL(3, 5) NOT NULL,
 			"adres"	TEXT NOT NULL,
 			"inhoud"	INTEGER,
 			"updateTime"	DATE
