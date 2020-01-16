@@ -2,16 +2,16 @@ var http = require('http')
 var sqlite3 = require('sqlite3')
 var db = new sqlite3.Database('database.db');
 db.serialize(function() {
-	function update(inhoud,id,callback) {
+	function updateInhoud(inhoud,id,callback) {
 		console.log(inhoud,id)
 		db.run("UPDATE containers SET inhoud = ?, updateTime=datetime('now','localtime') WHERE id = ?",[parseInt(inhoud),parseInt(id)],function (err) {
 			if(err) {
-				console.log('error updating',err,inhoud,id)
+				console.log('error updating inhoud',err,inhoud,id)
 				callback({status:'ERR'})
 			} else callback({status:'OK'})
 		});
 	}
-	function insert(lat,lng,adres,callback) {
+	function insertContainer(lat,lng,adres,callback) {
 		db.run("INSERT INTO containers('lat','lng','adres') VALUES ((?),(?),(?));",[lat,lng,adres],function (err) {
 			if(err) {
 				callback({status:'ERR'})
@@ -27,6 +27,21 @@ db.serialize(function() {
 			}
 		});
 	}
+	function deleteContainer(id,callback) {
+		db.run('DELETE FROM containers WHERE id = ?',[id],function (err) {
+			if(err) {
+				console.log('error deleting container:',err,id)
+				callback({status:'ERR'})
+			} else callback({status:'OK'})
+		})
+	}
+	function updateLocation(id,lat,lng,adres,callback) {
+		db.run("UPDATE containers SET lat = ?, lng = ?, adres= ? WHERE id = ?",[lat,lng,adres,parseInt(id)],function (err) {
+			if(err) {
+				console.log('error updating location',err,inhoud,id)
+				callback({status:'ERR'})
+			} else callback({status:'OK'})
+		});
 	db.run(`
 		CREATE TABLE IF NOT EXISTS "containers" (
 			"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -58,11 +73,19 @@ db.serialize(function() {
 			}
 			if(data) {
 				if(!data.id) {
-					insert(data.lat,data.lng,data.adres,function(response) {
+					insertContainer(data.lat,data.lng,data.adres,function(response) {
+						res.end(JSON.stringify(response))
+					})
+				} else if(data.adres && data.lat && data.lng) {
+					updateLocation(data.id,data.lat,data.lng,function (response) {
+						res.end(JSON.stringify(response))
+					})
+				} else if(data.inhoud) {
+					updateInhoud(data.inhoud,data.id,function(response) {
 						res.end(JSON.stringify(response))
 					})
 				} else {
-					update(data.inhoud,data.id,function(response) {
+					deleteContainer(data.id,function (response) {
 						res.end(JSON.stringify(response))
 					})
 				}
