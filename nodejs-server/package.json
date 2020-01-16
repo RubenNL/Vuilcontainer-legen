@@ -1,0 +1,23 @@
+{
+  "name": "vuilcontainer-legen",
+  "version": "1.0.0",
+  "description": "Om telegram aan de server te linken, gebruik dit linux command:",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RubenNL/Vuilcontainer-legen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RubenNL/Vuilcontainer-legen/issues"
+  },
+  "homepage": "https://github.com/RubenNL/Vuilcontainer-legen#readme",
+  "dependencies": {
+    "sqlite3": "^4.1.1"
+  }
+}
