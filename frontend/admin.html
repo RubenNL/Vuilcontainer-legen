@@ -24,4 +24,32 @@ td,th
 			})
 		}
 	})
+	$(document).on('click','tr',function (event) {
+		id=$(event.currentTarget).attr('containerid')
+		if(!id) return
+		if(confirm('wil je container '+id+' echt verwijderen?')) {
+			deleteContainer(id,function (success) {
+				if(success) alert('verwijderen van container '+id+' gelukt.')
+				else alert('verwijderen van container '+id+' niet gelukt. ververs de pagina en probeer het opnieuw.')
+			})
+		}
+	})
+	function postData(data,callback) {
+		$.post(serverUrl,JSON.stringify(data),function(data) {
+			updateContainers()
+			callback(data)
+		},'json')
+	}
+	function addContainer(lat,lng,adres,callback) {
+		postData({lat:lat,lng:lng,adres:adres},function(data){
+			if(data.id) callback(data.id)
+			else callback()
+			updateContainers()
+		})
+	}
+	function deleteContainer(id,callback) {
+		postData({action:"delete",id:id},function(data){
+			callback(data.status=="OK")
+		})
+	}
 </script>
