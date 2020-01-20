@@ -84,7 +84,7 @@ db.serialize(function() {
 					updateInhoud(data.inhoud,data.id,function(response) {
 						res.end(JSON.stringify(response))
 					})
-				} else {
+				} else if(data.action=="delete"){
 					deleteContainer(data.id,function (response) {
 						res.end(JSON.stringify(response))
 					})
