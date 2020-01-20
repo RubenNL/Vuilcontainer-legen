@@ -54,14 +54,13 @@ db.serialize(function() {
 		);
 	`);
 	server=http.createServer(function(req,res) {
-		containers={}
 		data=''
 		req.on('data',function (chunk) {
 			data+=chunk
 		})
 		req.on('end',function () {
 			console.log(data)
-			res.writeHead(200,{'Content-Type': 'application/json'})
+			res.writeHead(200,{'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'})
 			try {
 				data=JSON.parse(data)
 			} catch (e) {
