@@ -1,0 +1,84 @@
+<style type="text/css">
+td,th
+{
+    padding:0 15px 0 15px;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css">-->
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+<link rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css">
+<table id="list" style="max-width:50%; float: left;"></table>
+<div id="map" style="width: 50%; height: 100%; float: right;"></div>
+<script>
+	serverUrl='/nodejs'
+	L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
+	map = L.mapquest.map('map', {
+		center: [52.177439, 5.278999],
+		layers: L.mapquest.tileLayer('map'),
+		zoom: 10
+	});
+	map.on('click',function(event) {
+		console.log(event)
+		position=event.latlng
+		adres=prompt('Wat is het adres van deze container?')
+		if(adres) {
+			addContainer(position.lat,position.lng,adres,function (id) {
+				if(id) alert('Het nummer van de container is '+id+'.')
+				else alert('er is iets fout gegaan bij het aanmaken van de container.')
+			})
+		}
+	})
+	function inhoudToString(inhoud) {
+		if(inhoud<33) return "Leeg"
+		else if(inhoud<66) return "Halfvol"
+		else if(inhoud<80) return "Bijna vol"
+		else return "Vol"
+	}
+	function addMarker(lat,lng,color) {
+		const markerHtmlStyles = `
+			background-color: ${color};
+			width: 2rem;
+			height: 2rem;
+			display: block;
+			left: -1rem;
+			top: -1rem;
+			position: relative;
+			border-radius: 1rem 1rem 0;
+			transform: rotate(45deg);
+			border: 1px solid #FFFFFF`
+
+		const icon = L.divIcon({
+			className: "container-pin",
+			iconAnchor: [0, 24],
+			labelAnchor: [-6, 0],
+			popupAnchor: [0, -24],
+			html: `<span style="${markerHtmlStyles}" />`
+		})
+		L.marker([lat,lng],{icon:icon}).addTo(map);
+	}
+	function inhoudToColor(inhoud) {
+		if(inhoud<33) return "green"
+		else if(inhoud<66) return "yellow"
+		else if(inhoud<80) return "orange"
+		else return "red"
+	}
+	function addContainer(lat,lng,adres,callback) {
+		$.post(serverUrl,JSON.stringify({lat:lat,lng:lng,adres:adres}),function(data){
+			if(data.id) callback(data.id)
+			else callback()
+			updateContainers()
+		},'json')
+	}
+	function updateContainers() {
+		$.get(serverUrl,function (containers) {
+			$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
+			containers.forEach(function(container) {
+				$('#list').append('<tr><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>')
+				addMarker(container.lat,container.lng,inhoudToColor(container.inhoud))
+			})
+		})
+	}
+	updateContainers()
+</script>
