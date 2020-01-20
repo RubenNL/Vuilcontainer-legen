@@ -60,7 +60,7 @@ db.serialize(function() {
 		})
 		req.on('end',function () {
 			console.log(data)
-			res.writeHead(200,{'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'})
+			res.writeHead(200,{'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'})
 			try {
 				data=JSON.parse(data)
 			} catch (e) {
