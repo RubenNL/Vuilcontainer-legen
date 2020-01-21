@@ -1,4 +1,5 @@
 serverUrl='https://afval.rubend.nl/nodejs'
+markers=[]
 L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
 map = L.mapquest.map('map', {
 	center: [52.177439, 5.278999],
@@ -31,7 +32,7 @@ function addMarker(lat,lng,color) {
 		popupAnchor: [0, -24],
 		html: `<span style="${markerHtmlStyles}" />`
 	})
-	L.marker([lat,lng],{icon:icon}).addTo(map);
+	markers.push(L.marker([lat,lng],{icon:icon}).addTo(map));
 }
 function inhoudToColor(inhoud) {
 	if(inhoud<33) return "green"
@@ -40,6 +41,9 @@ function inhoudToColor(inhoud) {
 	else return "red"
 }
 function updateContainers() {
+	markers.forEach(function (marker) {
+		map.removeLayer(marker);
+	})
 	$.get(serverUrl,function (containers) {
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
 		containers.forEach(function(container) {
