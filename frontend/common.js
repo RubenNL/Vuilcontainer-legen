@@ -22,25 +22,9 @@ function inhoudToColor(inhoud) {
 	else return "red"
 }
 function addMarker(lat,lng,inhoud,adres) {
-	const markerHtmlStyles = `
-		background-color: ${inhoudToColor(inhoud)};
-		width: 2rem;
-		height: 2rem;
-		display: block;
-		left: -1rem;
-		top: -1rem;
-		position: relative;
-		border-radius: 1rem 1rem 0;
-		transform: rotate(45deg);
-		border: 1px solid #FFFFFF`	//bron:https://stackoverflow.com/a/40870439
-	const icon = L.divIcon({
-		className: "container-pin",
-		iconAnchor: [0, 24],
-		labelAnchor: [-6, 0],
-		popupAnchor: [0, -24],
-		html: `<span style="${markerHtmlStyles}" />`
-	})
-	marker=L.marker([lat,lng],{icon:icon}).addTo(map)
+	marker=L.circleMarker([lat,lng], {
+		color: inhoudToColor(inhoud)
+	}).addTo(map);
 	marker.bindPopup(adres+'('+inhoud+'% vol)')
 	markers.push(marker);
 }
