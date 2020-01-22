@@ -48,6 +48,13 @@ function getNotUpdatedContainers(callback) {
 		else callback(rows)
 	})
 }
+function cleanDatabase() {
+	getNotUpdatedContainers(function (containers) {
+		containers.forEach(function(container) {
+			updateInhoud(null,container.id,function () {})
+		})
+	})
+}
 db.run(`
 	CREATE TABLE IF NOT EXISTS "containers" (
 		"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -61,11 +68,6 @@ db.run(`
 process.on("exit", function () {
 	db.close()
 })
-setInterval(function () { //inhoud naar NULL voor elke container die niet is geupdate in 20 minuten.
-	getNotUpdatedContainers(function (containers) {
-		containers.forEach(function(container) {
-			updateInhoud(null,container.id,function () {})
-		})
-	})
-},1000*60*15)//15 minutes
+setInterval(cleanDatabase,1000*60*15)//inhoud naar NULL voor elke container die niet is geupdate in 20 minuten.
+cleanDatabase() //ook bij starten
 module.exports={updateInhoud:updateInhoud,insertContainer:insertContainer,deleteContainer:deleteContainer,updateLocation:updateLocation,getAllContainers:getAllContainers}
