@@ -1,0 +1,11 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+containerId=$(cat id)
+echo "containerId: $containerId"
+maxAfstand=300
+echo "max afstand: $maxAfstand"
+huidigeAfstand=$(./cscript)
+echo "huidige afstand: $huidigeAfstand"
+percentage=$(echo "100*($maxAfstand-$huidigeAfstand)/$maxAfstand" | bc)
+echo "percentage: $percentage"
+curl -d '{"id":"'$containerId'","inhoud":"'$percentage'"}' -H 'Content-Type: application/json' -X POST https://afval.rubend.nl/nodejs

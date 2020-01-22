@@ -1,0 +1,49 @@
+#!/bin/bash
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install fbi bc wiringpi
+
+sudo raspi-config nonint do_configure_keyboard us
+sudo raspi-config nonint do_boot_behaviour B2
+sudo raspi-config nonint do_wifi_country NL
+
+echo 'disable_overscan=1' | sudo tee -a /boot/config.txt
+sudo sed -i ' 1 s/.*/&rootwait logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
+
+data=$(tempfile 2>/dev/null)
+whiptail --msgbox "Log in bij Eduroam." 8 40
+whiptail --inputbox "E-mail:" 8 40 2>$data
+username=$(cat $data)
+whiptail --passwordbox "Wachtwoord:" 8 40 2>$data
+password=$(cat $data)
+rm $data
+hash=$(printf '%s' "$password" | iconv -t utf16le | openssl md4)
+
+echo '
+network={
+    ssid="eduroam"
+    proto=RSN
+    key_mgmt=WPA-EAP
+    pairwise=CCMP
+    auth_alg=OPEN
+    eap=PEAP
+    identity='$username'
+    password=hash:'$hash'
+    phase2="auth=MSCHAPV2"
+}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+
+sudo wget -O /etc/systemd/system/splashscreen.service https://afval.rubend.nl/pi/splashscreen.service
+wget https://afval.rubend.nl/pi/updateId
+wget https://afval.rubend.nl/pi/upload
+wget https://afval.rubend.nl/pi/cscript
+wget https://afval.rubend.nl/pi/gemeente.png
+chmod +x updateId upload cscript
+sudo systemctl enable splashscreen.service
+
+echo 'if [ $(tty) == "/dev/tty1" ]; then /updateId; fi' >> .bashrc
+crontab -l | { cat; echo "* * * * * /home/pi/upload"; } | crontab -
+
+whiptail --msgbox "De installatie lijkt gelukt te zijn.\nDe pi start opnieuw op." 8 40
+
+reboot
