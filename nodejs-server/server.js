@@ -1,5 +1,11 @@
 var http = require('http')
 var dbfuncs=require('./database.js')
+function makeHtml(containers) {
+	return '<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>'+containers.map(function(container) {
+		addMarker(container.lat,container.lng,container.inhoud,container.adres,container.id)
+		return '<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
+	}).join('')
+}
 http.createServer(function(req,res) {
 	function sendResponse(response) {
 		res.writeHead(200,{'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'})
@@ -11,7 +17,9 @@ http.createServer(function(req,res) {
 	})
 	req.on('end',function () {
 		if(jsonData.length==0) {
-			dbfuncs.getAllContainers(sendResponse)
+			dbfuncs.getAllContainers(function (containers) {
+				res.end(makeHtml(containers))
+			})
 			return
 		}
 		try {

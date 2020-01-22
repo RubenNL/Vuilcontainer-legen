@@ -42,6 +42,12 @@ function getAllContainers(callback) {
 		else callback(rows)
 	})
 }
+function getNotUpdatedContainers(callback) {
+	db.all('SELECT * FROM containers where updateTime<datetime("now","-20 minute","localtime")',function (err,rows) {
+		if(err) console.log('notupdated err:',err)
+		else callback(rows)
+	})
+}
 db.run(`
 	CREATE TABLE IF NOT EXISTS "containers" (
 		"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -55,4 +61,11 @@ db.run(`
 process.on("exit", function () {
 	db.close()
 })
+setInterval(function () { //inhoud naar NULL voor elke container die niet is geupdate in 20 minuten.
+	getNotUpdatedContainers(function (containers) {
+		containers.forEach(function(container) {
+			updateInhoud(null,container.id,function () {})
+		})
+	})
+},1000*60*15)//15 minutes
 module.exports={updateInhoud:updateInhoud,insertContainer:insertContainer,deleteContainer:deleteContainer,updateLocation:updateLocation,getAllContainers:getAllContainers}
