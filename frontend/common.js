@@ -5,12 +5,18 @@ map = L.mapquest.map('map', {
 	center: [52.177439, 5.278999],
 	layers: L.mapquest.tileLayer('map'),
 	zoom: 10
-});
+}); //source: https://developer.mapquest.com/
 function inhoudToString(inhoud) {
 	if(inhoud<33) return "Leeg"
 	else if(inhoud<66) return "Halfvol"
 	else if(inhoud<80) return "Bijna vol"
 	else return "Vol"
+}
+function inhoudToColor(inhoud) {
+	if(inhoud<33) return "green"
+	else if(inhoud<66) return "yellow"
+	else if(inhoud<80) return "orange"
+	else return "red"
 }
 function addMarker(lat,lng,color) {
 	const markerHtmlStyles = `
@@ -23,8 +29,7 @@ function addMarker(lat,lng,color) {
 		position: relative;
 		border-radius: 1rem 1rem 0;
 		transform: rotate(45deg);
-		border: 1px solid #FFFFFF`
-
+		border: 1px solid #FFFFFF`	//bron:https://stackoverflow.com/a/40870439
 	const icon = L.divIcon({
 		className: "container-pin",
 		iconAnchor: [0, 24],
@@ -34,11 +39,9 @@ function addMarker(lat,lng,color) {
 	})
 	markers.push(L.marker([lat,lng],{icon:icon}).addTo(map));
 }
-function inhoudToColor(inhoud) {
-	if(inhoud<33) return "green"
-	else if(inhoud<66) return "yellow"
-	else if(inhoud<80) return "orange"
-	else return "red"
+function addListRow() {
+	items=Object.values(arguments)
+	$('#list').append('<tr containerId="'+items.shift()+'"><td>'+items.join('</td><td>')+'</td></tr>')
 }
 function updateContainers() {
 	markers.forEach(function (marker) {
@@ -47,7 +50,7 @@ function updateContainers() {
 	$.get(serverUrl,function (containers) {
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
 		containers.forEach(function(container) {
-			$('#list').append('<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>')
+			addListRow(container.id,container.adres,inhoudToString(container.inhoud),container.updateTime)
 			addMarker(container.lat,container.lng,inhoudToColor(container.inhoud))
 		})
 	})
