@@ -46,7 +46,7 @@ function updateContainers() {
 		$('#list').append(containers.map(function(container) {
 			addMarker(container.lat,container.lng,container.inhoud,container.adres,container.id)
 			return '<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
-		}))
+		}).join())
 	})
 }
 updateContainers()
