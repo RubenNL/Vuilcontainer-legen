@@ -1,5 +1,0 @@
-doe de internet kabel in de raspberry pi(thuis)
-doe de stekker in de raspberry pi
-log in met gebruikersnaam pi, wachtwoord raspberry
-
-curl -sSL https://afval.rubend.nl/setup | bash
