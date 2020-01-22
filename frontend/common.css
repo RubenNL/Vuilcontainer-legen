@@ -20,7 +20,7 @@ body {
     "ft ft";
 
     grid-template-columns: 1fr 450px;
-    grid-template-rows: 180px 50px 450px 180px auto 180px;
+    grid-template-rows: 180px 50px 450px 200px auto 180px;
 
     grid-gap: 3px;
     padding:  2rem 4rem 2rem 4rem;
@@ -196,6 +196,7 @@ ul {
 
 li {
     margin: 0px 2px 2px 5px;
+    padding: 2px
 }
 
 
@@ -234,7 +235,7 @@ span {
         "ft";
 
         grid-template-columns: 1fr;
-        grid-template-rows: 150px 50px auto 450px 180px 150px;
+        grid-template-rows: 150px 50px auto 450px 200px 150px;
 
         grid-gap: 3px;
         padding: 5px;
@@ -298,6 +299,13 @@ span {
         border-radius: 25px;
     }
 
+    li {
+        padding: 2px
+    }
+
+
+
+
 }
 
 
@@ -307,7 +315,7 @@ span {
         padding: 0px;
         margin: 0px;
         grid-gap: 1px;
-        grid-template-rows: 140px 50px auto 250px 140px 150px;
+        grid-template-rows: 140px 50px auto 250px 155px 150px;
 
     }
 
@@ -362,6 +370,7 @@ span {
         width: 8px;
         float:left;
         border-radius: 50%;
+        margin: 3px;
     }
     
 
