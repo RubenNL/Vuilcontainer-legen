@@ -4,7 +4,8 @@ L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
 map = L.mapquest.map('map', {
 	center: [52.177439, 5.278999],
 	layers: L.mapquest.tileLayer('map'),
-	zoom: 10
+	zoom: 10,
+	preferCanvas: true//source:https://stackoverflow.com/a/43019740
 }); //source: https://developer.mapquest.com/
 function inhoudToString(inhoud) {
 	if(inhoud==null) return "Onbekend"
