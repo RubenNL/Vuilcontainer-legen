@@ -183,7 +183,11 @@ li {
 .list-bold {
     color:  rgb(23, 11, 44)
 }
-
+.colorBox {
+	height:16px; 
+	width:16px;
+	float:left;
+}
 @media (max-width: 950px) {
     .container {
         background-color: rgb(255, 255, 255);
