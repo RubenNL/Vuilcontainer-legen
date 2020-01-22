@@ -43,7 +43,7 @@ function getAllContainers(callback) {
 	})
 }
 function getNotUpdatedContainers(callback) {
-	db.all('SELECT * FROM containers where updateTime<datetime("now","-20 minute","localtime")',function (err,rows) {
+	db.all('SELECT * FROM containers WHERE updateTime<datetime("now","-20 minute","localtime") AND inhoud IS NOT NULL',function (err,rows) {
 		if(err) console.log('notupdated err:',err)
 		else callback(rows)
 	})
