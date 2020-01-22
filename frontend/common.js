@@ -10,7 +10,7 @@ $(document).on('click','tr',function (event) {
 	marker.openPopup()
 })
 map = L.mapquest.map('map', {
-	center: [52.177439, 5.278999],
+	center: [52.086459,5.086467],
 	layers: L.mapquest.tileLayer('map'),
 	zoom: 12,
 	preferCanvas: true//source:https://stackoverflow.com/a/43019740
