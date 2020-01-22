@@ -1,9 +1,9 @@
 #!/bin/bash
 . /usr/share/debconf/confmodule
 debconf-apt-progress --start
-sudo apt-get update | debconf-apt-progress --from 0 --to 10
-sudo apt-get upgrade -y | debconf-apt-progress --from 10 --to 90
-sudo apt-get install -y fbi bc wiringpi | debconf-apt-progress --from 90 --to 100
+sudo debconf-apt-progress --from 0 --to 10 -- apt-get update
+sudo debconf-apt-progress --from 10 --to 90 -- apt-get upgrade -y
+sudo debconf-apt-progress --from 90 --to 100 -- apt-get install -y fbi bc wiringpi
 debconf-apt-progress --stop
 sudo raspi-config nonint do_configure_keyboard us
 sudo raspi-config nonint do_boot_behaviour B2
