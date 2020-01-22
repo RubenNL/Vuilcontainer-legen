@@ -20,7 +20,7 @@ body {
     "ft ft";
 
     grid-template-columns: 1fr 450px;
-    grid-template-rows: 120px 50px 450px 180px auto 100px;
+    grid-template-rows: 180px 50px 450px 180px auto 180px;
 
     grid-gap: 3px;
     padding:  2rem 4rem 2rem 4rem;
@@ -33,25 +33,35 @@ body {
     background-color: rgb(181, 158, 224);
     grid-area: hd;
     padding: 5px;
-    display: grid;
+    display: flexbox;
+    text-align: left;
+    justify-content: center;
 
 }
 
 #h1 {
     font-family: 'Catamaran', sans-serif;
     font-size: 55px;
-    padding: 5px;
     margin: 5px;    
     color: rgb(45, 25, 82);
+    cursor: pointer;
 }
 
+
+#h2 {
+    font-family: monospace;
+    font-size: 14;
+    text-decoration: underline;
+    color: rgb(16, 6, 34);
+    padding: 0px;
+    margin: 80px;
+    cursor: pointer;
+}
 
 .title {
     grid-area: ti;
     padding: 20px 5px 5px 50px ;
     margin: 5px;
-
-
 }
 
 
@@ -80,6 +90,9 @@ body {
     grid-area: ft;
     margin: 5px;
     padding: 10px;
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
 }
 
 .keys {
@@ -92,20 +105,25 @@ body {
 }
 
 
-#github_p {
+#github-p {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     padding: 5px;
     margin: 5px;
     color: rgb(255, 255, 255);
 }
 
-#github_link{ 
+#github-link{ 
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
     color: rgb(205, 209, 255);
     text-decoration: underline;
 }
+
+.img-wrapper {
+    text-align: center;
+}
+
 
 a {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -180,6 +198,14 @@ li {
     margin: 0px 2px 2px 5px;
 }
 
+
+span {
+    margin: 0px 10px 0px 0px;
+}
+
+
+
+
 .list-bold {
     color:  rgb(23, 11, 44)
 }
@@ -205,24 +231,43 @@ li {
         "ft";
 
         grid-template-columns: 1fr;
-        grid-template-rows: 120px 50px auto 450px 180px 100px;
+        grid-template-rows: 150px 50px auto 450px 180px 150px;
 
         grid-gap: 3px;
         padding: 5px;
-        margin: 0px;
+        margin: 5px;
     
     }
+
+
+
+
+
     .header {
         justify-content: center;
-    }
+    }   
 
 
     #h1 {
-        font-size: 42px;
+        font-size: 36px;
         font-weight: bolder;
         text-align: center;
     }
+
+    #h2 {
+        font-size: 12;
+        font-weight: bolder;
+        text-align: center;
+        margin: 20px;
+    }
     
+    #title {
+        font-size: 19px; 
+    }
+
+
+
+
     a {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 28px;
