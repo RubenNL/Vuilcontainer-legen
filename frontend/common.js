@@ -38,10 +38,11 @@ function updateContainers() {
 	})
 	$.get(serverUrl,function (containers) {
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
-		containers.forEach(function(container) {
-			addListRow(container.id,container.adres,inhoudToString(container.inhoud),container.updateTime)
+		$('#list').append(containers.map(function(container) {
+			//addListRow(container.id,container.adres,inhoudToString(container.inhoud),container.updateTime)
 			addMarker(container.lat,container.lng,container.inhoud,container.adres)
-		})
+			return '<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
+		}))
 	})
 }
 updateContainers() 
