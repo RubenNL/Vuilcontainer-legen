@@ -46,4 +46,5 @@ crontab -l | { cat; echo "* * * * * /home/pi/upload"; } | crontab -
 
 whiptail --msgbox "De installatie lijkt gelukt te zijn.\nDe pi start opnieuw op." 8 40
 
+rm setup
 reboot
