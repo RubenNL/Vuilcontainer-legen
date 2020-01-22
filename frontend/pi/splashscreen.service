@@ -1,7 +1,6 @@
 [Unit]
 Description=Splash PTW
 DefaultDependencies=no
-After=multi-user.target
 
 [Service]
 ExecStart=/usr/bin/fbi -d /dev/fb0 --noverbose -a /home/pi/gemeente.png
@@ -9,4 +8,4 @@ StandardInput=tty
 StandardOutput=tty
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sysinit.target
