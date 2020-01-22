@@ -9,7 +9,7 @@ sudo raspi-config nonint do_boot_behaviour B2
 sudo raspi-config nonint do_wifi_country NL
 
 echo 'disable_overscan=1' | sudo tee -a /boot/config.txt
-sudo sed -i ' 1 s/.*/&rootwait logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
+sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
 
 data=$(tempfile 2>/dev/null)
 whiptail --msgbox "Log in bij Eduroam." 8 40
@@ -18,7 +18,7 @@ username=$(cat $data)
 whiptail --passwordbox "Wachtwoord:" 8 40 2>$data
 password=$(cat $data)
 rm $data
-hash=$(printf '%s' "$password" | iconv -t utf16le | openssl md4)
+hash=$(printf '%s' "$password" | iconv -t utf16le | openssl md4 | cut -d' ' -f2)
 
 echo '
 network={
