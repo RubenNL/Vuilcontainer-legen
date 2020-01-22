@@ -1,17 +1,14 @@
 #!/bin/bash
-. /usr/share/debconf/confmodule
-debconf-apt-progress --start
-sudo debconf-apt-progress --from 0 --to 10 -- apt-get update
-sudo debconf-apt-progress --from 10 --to 90 -- apt-get upgrade -y
-sudo debconf-apt-progress --from 90 --to 100 -- apt-get install -y fbi bc wiringpi
-debconf-apt-progress --stop
+#----------system update--------------------
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y fbi bc wiringpi
+#----------raspi config options-------------
 sudo raspi-config nonint do_configure_keyboard us
+sudo raspi-config nonint do_change_timezone Europe/Amsterdam
 sudo raspi-config nonint do_boot_behaviour B2
 sudo raspi-config nonint do_wifi_country NL
-
-echo 'disable_overscan=1' | sudo tee -a /boot/config.txt >/dev/null
-sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
-
+#----------WIFI config----------------------
 data=$(tempfile 2>/dev/null)
 whiptail --msgbox "Log in bij Eduroam." 8 40
 whiptail --inputbox "E-mail:" 8 40 2>$data
@@ -34,18 +31,24 @@ network={
     phase2="auth=MSCHAPV2"
 }' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf >/dev/null
 
+#-------------Download all files-----------------------------
 sudo wget -q -O /etc/systemd/system/splashscreen.service https://afval.rubend.nl/pi/splashscreen.service
 wget -q https://afval.rubend.nl/pi/updateId
 wget -q https://afval.rubend.nl/pi/upload
 wget -q https://afval.rubend.nl/pi/cscript
 wget -q https://afval.rubend.nl/pi/gemeente.png
 chmod +x updateId upload cscript
+#--------------boot/display options--------------------------
 sudo systemctl enable splashscreen.service
-
+echo 'disable_overscan=1' | sudo tee -a /boot/config.txt >/dev/null
+sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
 echo 'if [ $(tty) == "/dev/tty1" ]; then /updateId; fi' >> .bashrc
+#---------------autorun upload every minute------------------
 crontab -l | { cat; echo "* * * * * /home/pi/upload"; } | crontab -
-
+#---------------lower sd write rate--------------------------
+echo 'tmpfs /tmp tmpfs defaults,size=30M 0 0' | sudo tee -a /etc/fstab >/dev/null
+sudo systemctl disable dphys-swapfile.service
+#--------------end of setup----------------------------------
 whiptail --msgbox "De installatie lijkt gelukt te zijn.\nDe pi start opnieuw op." 8 40
-
 rm setup
 reboot
