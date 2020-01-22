@@ -1,14 +1,15 @@
 #!/bin/bash
-
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y fbi bc wiringpi
-
+. /usr/share/debconf/confmodule
+debconf-apt-progress --start
+sudo apt-get update | debconf-apt-progress --from 0 --to 10
+sudo apt-get upgrade -y | debconf-apt-progress --from 10 --to 90
+sudo apt-get install -y fbi bc wiringpi | debconf-apt-progress --from 90 --to 100
+debconf-apt-progress --stop
 sudo raspi-config nonint do_configure_keyboard us
 sudo raspi-config nonint do_boot_behaviour B2
 sudo raspi-config nonint do_wifi_country NL
 
-echo 'disable_overscan=1' | sudo tee -a /boot/config.txt
+echo 'disable_overscan=1' | sudo tee -a /boot/config.txt >/dev/null
 sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
 
 data=$(tempfile 2>/dev/null)
@@ -31,13 +32,13 @@ network={
     identity='$username'
     password=hash:'$hash'
     phase2="auth=MSCHAPV2"
-}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf >/dev/null
 
-sudo wget -O /etc/systemd/system/splashscreen.service https://afval.rubend.nl/pi/splashscreen.service
-wget https://afval.rubend.nl/pi/updateId
-wget https://afval.rubend.nl/pi/upload
-wget https://afval.rubend.nl/pi/cscript
-wget https://afval.rubend.nl/pi/gemeente.png
+sudo wget -q -O /etc/systemd/system/splashscreen.service https://afval.rubend.nl/pi/splashscreen.service
+wget -q https://afval.rubend.nl/pi/updateId
+wget -q https://afval.rubend.nl/pi/upload
+wget -q https://afval.rubend.nl/pi/cscript
+wget -q https://afval.rubend.nl/pi/gemeente.png
 chmod +x updateId upload cscript
 sudo systemctl enable splashscreen.service
 
