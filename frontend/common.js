@@ -1,10 +1,18 @@
 serverUrl='https://afval.rubend.nl/nodejs'
-markers=[]
+markers={}
 L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
+$(document).on('click','tr',function (event) {
+	id=$(event.currentTarget).attr('containerid')
+	if(!id) return //bij bovenste rij
+	marker=markers[id]
+	map.panTo(marker.getLatLng())
+	map.setZoom(16)
+	marker.openPopup()
+})
 map = L.mapquest.map('map', {
 	center: [52.177439, 5.278999],
 	layers: L.mapquest.tileLayer('map'),
-	zoom: 10,
+	zoom: 12,
 	preferCanvas: true//source:https://stackoverflow.com/a/43019740
 }); //source: https://developer.mapquest.com/
 function inhoudToString(inhoud) {
@@ -21,28 +29,24 @@ function inhoudToColor(inhoud) {
 	else if(inhoud<80) return "orange"
 	else return "red"
 }
-function addMarker(lat,lng,inhoud,adres) {
+function addMarker(lat,lng,inhoud,adres,id) {
 	marker=L.circleMarker([lat,lng], {
 		color: inhoudToColor(inhoud)
 	}).addTo(map);
 	marker.bindPopup(adres+'('+inhoud+'% vol)')
-	markers.push(marker);
-}
-function addListRow() {
-	items=Object.values(arguments)
-	$('#list').append('<tr containerId="'+items.shift()+'"><td>'+items.join('</td><td>')+'</td></tr>')
+	markers[id]=marker;
 }
 function updateContainers() {
-	markers.forEach(function (marker) {
+	Object.values(markers).forEach(function (marker) {
 		map.removeLayer(marker);
 	})
+	markers={}
 	$.get(serverUrl,function (containers) {
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
 		$('#list').append(containers.map(function(container) {
-			//addListRow(container.id,container.adres,inhoudToString(container.inhoud),container.updateTime)
-			addMarker(container.lat,container.lng,container.inhoud,container.adres)
+			addMarker(container.lat,container.lng,container.inhoud,container.adres,container.id)
 			return '<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
 		}))
 	})
 }
-updateContainers() 
+updateContainers()
