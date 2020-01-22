@@ -7,7 +7,7 @@ http.createServer(function(req,res) {
 	}
 	jsonData=''
 	req.on('data',function (chunk) {
-		data+=chunk
+		jsonData+=chunk
 	})
 	req.on('end',function () {
 		if(jsonData.length==0) {
