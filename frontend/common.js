@@ -7,20 +7,22 @@ map = L.mapquest.map('map', {
 	zoom: 10
 }); //source: https://developer.mapquest.com/
 function inhoudToString(inhoud) {
-	if(inhoud<33) return "Leeg"
+	if(inhoud==null) return "Onbekend"
+	else if(inhoud<33) return "Leeg"
 	else if(inhoud<66) return "Halfvol"
 	else if(inhoud<80) return "Bijna vol"
 	else return "Vol"
 }
 function inhoudToColor(inhoud) {
+	if(inhoud==null) return "black"
 	if(inhoud<33) return "green"
 	else if(inhoud<66) return "yellow"
 	else if(inhoud<80) return "orange"
 	else return "red"
 }
-function addMarker(lat,lng,color) {
+function addMarker(lat,lng,inhoud,adres) {
 	const markerHtmlStyles = `
-		background-color: ${color};
+		background-color: ${inhoudToColor(inhoud)};
 		width: 2rem;
 		height: 2rem;
 		display: block;
@@ -37,7 +39,9 @@ function addMarker(lat,lng,color) {
 		popupAnchor: [0, -24],
 		html: `<span style="${markerHtmlStyles}" />`
 	})
-	markers.push(L.marker([lat,lng],{icon:icon}).addTo(map));
+	marker=L.marker([lat,lng],{icon:icon}).addTo(map)
+	marker.bindPopup(adres+'('+inhoud+'% vol)')
+	markers.push(marker);
 }
 function addListRow() {
 	items=Object.values(arguments)
@@ -51,7 +55,7 @@ function updateContainers() {
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
 		containers.forEach(function(container) {
 			addListRow(container.id,container.adres,inhoudToString(container.inhoud),container.updateTime)
-			addMarker(container.lat,container.lng,inhoudToColor(container.inhoud))
+			addMarker(container.lat,container.lng,container.inhoud,container.adres)
 		})
 	})
 }
