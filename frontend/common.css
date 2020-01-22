@@ -187,6 +187,7 @@ li {
 	height:16px; 
 	width:16px;
 	float:left;
+	border-radius: 50%;
 }
 @media (max-width: 950px) {
     .container {
