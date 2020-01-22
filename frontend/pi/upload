@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 containerId=$(cat id)
 echo "containerId: $containerId"
-maxAfstand=300
+maxAfstand=$(cat afstand)
 echo "max afstand: $maxAfstand"
 huidigeAfstand=$(./cscript)
 echo "huidige afstand: $huidigeAfstand"
