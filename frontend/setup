@@ -2,7 +2,7 @@
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install fbi bc wiringpi
+sudo apt install -y fbi bc wiringpi
 
 sudo raspi-config nonint do_configure_keyboard us
 sudo raspi-config nonint do_boot_behaviour B2
