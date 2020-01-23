@@ -132,13 +132,13 @@ a {
     text-decoration: none;
 }
 
-table {
+#list {
     border-collapse: collapse;
     align-self: flex-start;
     border: 2px solid rgb(122, 122, 122);    
   }
   
-table, tr, th, td {
+#list table, #list tr, #list th, #list td {
     font-family: sans-serif;
     font-size: 18px;
     padding: 15px;
@@ -149,11 +149,11 @@ table, tr, th, td {
 
 
 
-table tr:nth-child(odd) {
+#list tr:nth-child(odd) {
     background-color: #dcd6eb;
 }
 
-table tr:nth-child(even) {
+#list tr:nth-child(even) {
 background-color: #ffffff;
 }
 
@@ -180,8 +180,8 @@ p {
     font-size: 16px;
     font-weight: bold;
     text-align: left;
-    padding: 3px;
-    margin: 10px 0px 0px 10px;    
+    padding: 0px;
+    margin: 0px;
 }
 
 ul {
@@ -269,7 +269,7 @@ span {
         padding: 5px 5px 5px 5px ;
     }
 
-    table, tr, th, td {
+    #list table, #list tr, #list th, #list td {
         font-family: sans-serif;
         font-size: 18px;
         padding: 5px;
@@ -336,7 +336,7 @@ span {
     }
 
 
-    table, tr, th, td {
+    #list table, #list tr, #list th, #list td {
         font-family: sans-serif;
         font-size: 12px;
         padding: 5px;
