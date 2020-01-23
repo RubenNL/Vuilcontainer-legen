@@ -5,8 +5,8 @@ $(document).on('click','tr',function (event) {
 	id=$(event.currentTarget).attr('containerid')
 	if(!id) return //bij bovenste rij
 	marker=markers[id]
-	map.panTo(marker.getLatLng())
 	map.setZoom(16)
+	map.panTo(marker.getLatLng())
 	marker.openPopup()
 })
 map = L.mapquest.map('map', {
