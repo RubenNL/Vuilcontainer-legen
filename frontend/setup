@@ -25,7 +25,7 @@ network={
     pairwise=CCMP
     auth_alg=OPEN
     eap=PEAP
-    identity='$username'
+    identity="'$username'"
     password=hash:'$hash'
     phase2="auth=MSCHAPV2"
 }' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf >/dev/null
@@ -38,12 +38,14 @@ wget -q https://afval.rubend.nl/pi/gemeente.png
 chmod +x updateContainer upload cscript
 #--------------Default values--------------------------------
 echo '0' > id
-echo '300' > inhoud
+echo '300' > afstand
 #--------------boot/display options--------------------------
+sudo systemctl daemon-reload
 sudo systemctl enable splashscreen.service
 echo -e 'disable_overscan=1\ndisable_splash=1' | sudo tee -a /boot/config.txt >/dev/null
-sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=1 quiet/' /boot/cmdline.txt
+sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=1 loglevel=0 quiet/' /boot/cmdline.txt
 echo 'if [ $(tty) == "/dev/tty1" ]; then ./updateContainer; fi' >> .bashrc
+touch .hushlogin
 #---------------autorun upload every minute------------------
 crontab -l | { cat; echo "* * * * * /home/pi/upload"; } | crontab -
 #---------------lower sd write rate--------------------------
