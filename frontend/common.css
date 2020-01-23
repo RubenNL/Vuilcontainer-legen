@@ -19,7 +19,7 @@ body {
     "tb ."
     "ft ft";
 
-    grid-template-columns: 1fr 450px;
+    grid-template-columns: max-content auto;
     grid-template-rows: 180px 50px 450px auto auto 180px;
 
     grid-gap: 3px;
