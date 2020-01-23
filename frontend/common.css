@@ -20,7 +20,7 @@ body {
     "ft ft";
 
     grid-template-columns: 1fr 450px;
-    grid-template-rows: 180px 50px 450px 200px auto 180px;
+    grid-template-rows: 180px 50px 450px 215px auto 180px;
 
     grid-gap: 3px;
     padding:  2rem 4rem 2rem 4rem;
@@ -76,7 +76,6 @@ body {
 
 .map {
     grid-area: mp;
-    margin: 10px;
     border: 2px solid rgb(122, 122, 122);
     border-radius: 30px;
     display: flexbox;
@@ -98,7 +97,6 @@ body {
 .keys {
     grid-area: ky;
     background-color: rgba(171, 166, 207, 0.493);
-    margin: 10px 10px 10px 10px;
     border: 1px solid rgb(122, 122, 122);
     border-radius: 5px;
     padding: 5px;
