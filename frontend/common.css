@@ -98,7 +98,7 @@ body {
 .keys {
     grid-area: ky;
     background-color: rgba(171, 166, 207, 0.493);
-    margin: 10px 10px 0px 10px;
+    margin: 10px 10px 10px 10px;
     border: 1px solid rgb(122, 122, 122);
     border-radius: 5px;
     padding: 5px;
