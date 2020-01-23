@@ -62,6 +62,7 @@ body {
     grid-area: ti;
     padding: 20px 5px 5px 20px ;
     margin: 5px;
+	white-space:nowrap;
 }
 
 
@@ -291,7 +292,6 @@ span {
     }
     .map {
         grid-area: mp;
-        margin: 25px;
         border: 2px solid rgb(122, 122, 122);
         border-radius: 25px;
     }
