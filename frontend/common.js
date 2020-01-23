@@ -5,8 +5,7 @@ $(document).on('click','tr',function (event) {
 	id=$(event.currentTarget).attr('containerid')
 	if(!id) return //bij bovenste rij
 	marker=markers[id]
-	map.setZoom(16)
-	map.panTo(marker.getLatLng())
+	map.setView(marker.getLatLng(), 16);//source: https://gis.stackexchange.com/a/147121
 	marker.openPopup()
 })
 map = L.mapquest.map('map', {
