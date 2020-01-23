@@ -20,7 +20,7 @@ body {
     "ft ft";
 
     grid-template-columns: 1fr 450px;
-    grid-template-rows: 180px 50px 450px 215px auto 180px;
+    grid-template-rows: 180px 50px 450px auto auto 180px;
 
     grid-gap: 3px;
     padding:  2rem 4rem 2rem 4rem;
@@ -232,7 +232,7 @@ span {
         "ft";
 
         grid-template-columns: 1fr;
-        grid-template-rows: 150px 50px auto 450px 200px 150px;
+        grid-template-rows: 150px 50px auto 450px auto 150px;
 
         grid-gap: 3px;
         padding: 5px;
@@ -312,7 +312,7 @@ span {
         padding: 0px;
         margin: 0px;
         grid-gap: 1px;
-        grid-template-rows: 140px 50px auto 250px 155px 150px;
+        grid-template-rows: 140px 50px auto 250px auto 150px;
 
     }
 
