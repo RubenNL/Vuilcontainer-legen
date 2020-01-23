@@ -210,8 +210,8 @@ span {
 .colorBox {
 	height:16px; 
 	width:16px;
-	float:left;
 	border-radius: 50%;
+	display: inline-block;
 }
 
 
