@@ -33,6 +33,7 @@ function addMarker(lat,lng,inhoud,adres,id) {
 	marker=L.circleMarker([lat,lng], {
 		color: inhoudToColor(inhoud)
 	}).addTo(map);
+	if(inhoud==null) inhoud="onbekend"
 	marker.bindPopup(adres+'('+inhoud+'% vol)')
 	markers[id]=marker;
 }
