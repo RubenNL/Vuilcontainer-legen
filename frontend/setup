@@ -43,7 +43,7 @@ echo '300' > afstand
 sudo systemctl daemon-reload
 sudo systemctl enable splashscreen.service
 echo -e 'disable_overscan=1\ndisable_splash=1' | sudo tee -a /boot/config.txt >/dev/null
-sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=1 loglevel=0 quiet/' /boot/cmdline.txt
+sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=0 quiet/' /boot/cmdline.txt
 echo 'if [ $(tty) == "/dev/tty1" ]; then ./updateContainer; fi' >> .bashrc
 touch .hushlogin
 #---------------autorun upload every minute------------------
