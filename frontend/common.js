@@ -10,10 +10,11 @@ $(document).on('click','tr',function (event) {
 })
 map = L.mapquest.map('map', {
 	center: [52.086459,5.086467],
+	zoom: 14,
 	layers: L.mapquest.tileLayer('map'),
-	zoom: 12,
 	preferCanvas: true//source:https://stackoverflow.com/a/43019740
 }); //source: https://developer.mapquest.com/
+map.fitBounds([[52.030854,4.981787],[52.142064,5.1911489]])
 function inhoudToString(inhoud) {
 	if(inhoud==null) return "Onbekend"
 	else if(inhoud<33) return "Leeg"
