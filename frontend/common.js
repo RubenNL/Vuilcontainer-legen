@@ -1,20 +1,31 @@
 serverUrl='https://afval.rubend.nl/nodejs'
 markers={}
+maxBounds=[[52.030854,4.981787],[52.142064,5.1911489]]
 L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
-$(document).on('click','tr',function (event) {
+function view(latlng) {
+	map.setView(latlng,16);//source: https://gis.stackexchange.com/a/147121
+}
+function trClick(event) {
 	id=$(event.currentTarget).attr('containerid')
 	if(!id) return //bij bovenste rij
 	marker=markers[id]
-	map.setView(marker.getLatLng(), 16);//source: https://gis.stackexchange.com/a/147121
+	view(marker.getLatLng())
 	marker.openPopup()
-})
+}
 map = L.mapquest.map('map', {
 	center: [52.086459,5.086467],
-	zoom: 14,
+	zoom: 11,
 	layers: L.mapquest.tileLayer('map'),
-	preferCanvas: true//source:https://stackoverflow.com/a/43019740
+	preferCanvas: true,//source:https://stackoverflow.com/a/43019740
+	maxBounds:maxBounds
 }); //source: https://developer.mapquest.com/
-map.fitBounds([[52.030854,4.981787],[52.142064,5.1911489]])
+setTimeout(function () {
+	if($('#map').height()==0) {
+		$('tr').on('click',trClick)
+		$('#map').height('256px')
+		map.setMinZoom(11)
+	}
+},500) //allemaal voor compatibility op oude iphone(4s)
 function inhoudToString(inhoud) {
 	if(inhoud==null) return "Onbekend"
 	else if(inhoud<33) return "Leeg"
@@ -38,8 +49,8 @@ function addMarker(lat,lng,inhoud,adres,id) {
 	markers[id]=marker;
 }
 function updateContainers() {
-	Object.values(markers).forEach(function (marker) {
-		map.removeLayer(marker);
+	Object.keys(markers).forEach(function (id) {
+		map.removeLayer(markers[id]);
 	})
 	markers={}
 	$.get(serverUrl,function (containers) {
@@ -50,4 +61,5 @@ function updateContainers() {
 		}).join())
 	})
 }
+$(document).on('click','tr',trClick)
 updateContainers()
