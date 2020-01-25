@@ -1,4 +1,4 @@
-var http = require('http')
+var http = require('http') //gebruik gemaakt van https://nodejs.org/api/http.html
 var dbfuncs=require('./database.js')
 http.createServer(function(req,res) {
 	function sendResponse(response) {

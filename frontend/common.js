@@ -1,4 +1,4 @@
-serverUrl='https://afval.rubend.nl/nodejs'
+serverUrl='/nodejs'
 maxBounds=[[52.030854,4.981787],[52.142064,5.1911489]]
 L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
 markers={}
@@ -45,7 +45,7 @@ function updateContainers() {
 			addMarker(container.lat,container.lng,container.inhoud,container.adres,container.id)
 			return '<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
 		}).join())
-	})
+	}) //met hulp van https://api.jquery.com/jQuery.get
 }
 map = L.mapquest.map('map', {
 	center: [52.086459,5.086467],
@@ -63,3 +63,6 @@ setTimeout(function () {
 },500) //allemaal voor compatibility op oude iphone(4s)
 $(document).on('click','tr',trClick)
 updateContainers()
+/*
+ * In dit bestand is veel gebruik gemaakt van https://leafletjs.com/reference-1.6.0.html
+ */

@@ -1,4 +1,4 @@
-var sqlite3 = require('sqlite3')
+var sqlite3 = require('sqlite3') //gebruik gemaakt van https://github.com/mapbox/node-sqlite3/wiki/API
 var db = new sqlite3.Database('database.db');
 process.on("exit", function () {
 	db.close()

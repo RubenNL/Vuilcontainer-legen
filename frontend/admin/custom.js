@@ -3,7 +3,7 @@ function postData(data,callback) {
 	$.post(serverUrl,JSON.stringify(data),function(data) {
 		updateContainers()
 		callback(data)
-	},'json')
+	},'json')//met hulp van https://api.jquery.com/jQuery.post/
 }
 function addContainer(lat,lng,adres,callback) {
 	postData({lat:lat,lng:lng,adres:adres},function(data){
@@ -34,3 +34,4 @@ $(document).on('click','tr',function (event) {
 		})
 	}
 })
+$('#h2').attr('href','instructies.html').text('Installatie instructies voor Raspberry Pi')
