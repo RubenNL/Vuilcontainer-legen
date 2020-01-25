@@ -1,8 +1,8 @@
 #!/bin/bash
 #----------system update------------------------------------
 sudo apt update
-sudo apt upgrade -y
-sudo apt install -y fbi bc wiringpi unattended-upgrades
+#sudo apt upgrade -y #disabled om installatie veel sneller te maken.
+sudo apt install -y fim bc wiringpi unattended-upgrades
 #----------raspi config options-----------------------------
 sudo raspi-config nonint do_configure_keyboard us
 sudo raspi-config nonint do_change_timezone Europe/Amsterdam
