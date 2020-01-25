@@ -8,7 +8,7 @@ while true; do
 	if [ $geupdate -eq 0 ]; then
 		mv $data id
 	fi
-	whiptail --inputbox "Wat is de maximale afstand in CM?" 10 40 $(cat afstand) 2>$data
+	whiptail --inputbox "Wat is de maximale afstand in CM?\nOp dit moment is de afstand\n$(./cscript)cm." 10 40 $(cat afstand) 2>$data
 	geupdate=$?
 	if [ $geupdate -eq 0 ]; then
 		mv $data afstand
