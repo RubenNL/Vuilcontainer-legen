@@ -100,6 +100,10 @@ body {
     border: 1px solid rgb(122, 122, 122);
     border-radius: 5px;
     padding: 5px;
+	font-family: monospace;
+    font-size: 16px;
+    text-align: left;
+    padding: 3px;
 }
 
 
@@ -183,19 +187,6 @@ p {
     padding: 0px;
     margin: 0px;
 }
-
-ul {
-    font-family: monospace;
-    font-size: 16px;
-    text-align: left;
-    list-style-type: none;
-    padding: 3px;
-}
-
-li {
-    margin: 0px 2px 2px 5px;
-}
-
 
 span {
     margin: 0px 10px 0px 0px;
@@ -302,14 +293,6 @@ span {
         border: 2px solid rgb(122, 122, 122);
         border-radius: 25px;
     }
-
-    li {
-        padding: 2px
-    }
-
-
-
-
 }
 
 
@@ -361,14 +344,6 @@ span {
         margin: 5px 0px 0px 10px;    
     }
     
-    ul {
-        font-family: monospace;
-        font-size: 10px;
-        text-align: left;
-        list-style-type: none;
-        padding: 3px;
-    }
-
     .colorBox {
         height:8px; 
         width: 8px;
@@ -376,10 +351,15 @@ span {
         border-radius: 50%;
         margin: 3px;
     }
-    
+	.innerColor {
+		margin:1px;
+		height:6px;
+		width:6px;
+	}
 
     .keys {
-        padding: 2px;
+        font-size: 10px;
+        list-style-type: none;
     }
     
 
