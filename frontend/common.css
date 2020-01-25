@@ -213,7 +213,14 @@ span {
 	border-radius: 50%;
 	display: inline-block;
 }
-
+.innerColor {
+	margin:3px;
+	height:10px;
+	width:10px;
+	border-radius: 50%;
+	display:inline-block;
+	background-color: white;
+}
 
 
 @media (max-width: 950px) {
