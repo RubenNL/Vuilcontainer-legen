@@ -1,3 +1,4 @@
+//wordt niet uitgevoerd op de admin-pagina
 map.locate()
 map.on('locationfound',function(event) {
 	latlng=event.latlng

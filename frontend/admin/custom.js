@@ -1,3 +1,4 @@
+//Deze code wordt alleen uitgevoerd bij de admin-pagina.
 function postData(data,callback) {
 	$.post(serverUrl,JSON.stringify(data),function(data) {
 		updateContainers()

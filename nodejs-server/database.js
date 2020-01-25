@@ -1,5 +1,8 @@
 var sqlite3 = require('sqlite3')
 var db = new sqlite3.Database('database.db');
+process.on("exit", function () {
+	db.close()
+})
 function updateInhoud(inhoud,id,callback) {
 	db.run("UPDATE containers SET inhoud = ?, updateTime=datetime('now','localtime') WHERE id = ?",[parseInt(inhoud),parseInt(id)],function (err) {
 		if(err) console.log('error updating inhoud',err,inhoud,id)
@@ -28,14 +31,6 @@ function deleteContainer(id,callback) {
 		} else callback({status:'OK'})
 	})
 }
-function updateLocation(id,lat,lng,adres,callback) {
-	db.run("UPDATE containers SET lat = ?, lng = ?, adres= ? WHERE id = ?",[lat,lng,adres,parseInt(id)],function (err) {
-		if(err) {
-			console.log('error updating location',err,inhoud,id)
-			callback({status:'ERR'})
-		} else callback({status:'OK'})
-	});
-}
 function getAllContainers(callback) {
 	db.all("SELECT * FROM containers", function(err, rows) {
 		if(err) console.log('select error:',err)
@@ -62,12 +57,9 @@ db.run(`
 		"lng"	DECIMAL(7, 5) NOT NULL,
 		"adres"	TEXT NOT NULL,
 		"inhoud"	INTEGER,
-		"updateTime"	DATE
+		"updateTime"	DATE DEFAULT (datetime('now','localtime'))
 	);
-`);
-process.on("exit", function () {
-	db.close()
-})
+`); //bron van DEFAULT van updateTime: https://stackoverflow.com/a/228070/5981611
 setInterval(cleanDatabase,1000*60*15)//inhoud naar NULL voor elke container die niet is geupdate in 20 minuten.
 cleanDatabase() //ook bij starten
-module.exports={updateInhoud:updateInhoud,insertContainer:insertContainer,deleteContainer:deleteContainer,updateLocation:updateLocation,getAllContainers:getAllContainers}
+module.exports={updateInhoud:updateInhoud,insertContainer:insertContainer,deleteContainer:deleteContainer,getAllContainers:getAllContainers}

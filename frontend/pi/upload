@@ -4,7 +4,7 @@ containerId=$(cat id)
 echo "containerId: $containerId"
 maxAfstand=$(cat afstand)
 echo "max afstand: $maxAfstand"
-huidigeAfstand=$(./cscript)
+huidigeAfstand=$(./cscript) #cscript is afkomstig van https://github.com/OmarAflak/HC-SR04-Raspberry-Pi-C-
 echo "huidige afstand: $huidigeAfstand"
 percentage=$(echo "100*($maxAfstand-$huidigeAfstand)/$maxAfstand" | bc)
 echo "percentage: $percentage"

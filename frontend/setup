@@ -3,10 +3,15 @@
 sudo apt update
 #sudo apt upgrade -y #disabled om installatie veel sneller te maken.
 sudo apt install -y fim bc wiringpi unattended-upgrades
+#fim 	vervangt fbi, voor de kleinere installatieformaat.
+#bc 	is voor de berekening
+#wiringpi is nodig om te communiceren met de sensor
+#unattended-upgrades houdt het systeem up-to-date, en start de updates pas de volgende dag.
 #----------raspi config options-----------------------------
 sudo raspi-config nonint do_configure_keyboard us
 sudo raspi-config nonint do_change_timezone Europe/Amsterdam
 sudo raspi-config nonint do_boot_behaviour B2
+#B2=autologin terminal
 sudo raspi-config nonint do_wifi_country NL
 #----------WIFI config--------------------------------------
 data=$(tempfile 2>/dev/null)
@@ -16,7 +21,7 @@ username=$(cat $data)
 whiptail --passwordbox "Wachtwoord:" 8 40 2>$data
 password=$(cat $data)
 rm $data
-hash=$(printf '%s' "$password" | iconv -t utf16le | openssl md4 | cut -d' ' -f2)
+hash=$(printf '%s' "$password" | iconv -t utf16le | openssl md4 | cut -d' ' -f2) #bron: https://superuser.com/a/387549/1056389
 echo '
 network={
     ssid="eduroam"
@@ -28,7 +33,7 @@ network={
     identity="'$username'"
     password=hash:'$hash'
     phase2="auth=MSCHAPV2"
-}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf >/dev/null
+}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf >/dev/null #bron: HU raspberry pi image, python script voor wifi
 #-------------Download all files-----------------------------
 sudo wget -q -O /etc/systemd/system/splashscreen.service https://afval.rubend.nl/pi/splashscreen.service
 wget -q https://afval.rubend.nl/pi/updateContainer
@@ -36,18 +41,19 @@ wget -q https://afval.rubend.nl/pi/upload
 wget -q https://afval.rubend.nl/pi/cscript
 wget -q https://afval.rubend.nl/pi/gemeente.png
 chmod +x updateContainer upload cscript
+#cscript is gecompileerd van https://github.com/OmarAflak/HC-SR04-Raspberry-Pi-C-, omdat een C script sneller en nauwkeuriger is dan python/bash
 #--------------Default values--------------------------------
-echo '0' > id
-echo '300' > afstand
+echo '0' > id #0 wordt nooit gebruikt
+echo '300' > afstand #schatting van standaard container
 #--------------boot/display options--------------------------
 sudo systemctl daemon-reload
 sudo systemctl enable splashscreen.service
 echo -e 'disable_overscan=1\ndisable_splash=1' | sudo tee -a /boot/config.txt >/dev/null
 sudo sed -i ' 1 s/.*/& logo.nologo consoleblank=0 loglevel=0 quiet/' /boot/cmdline.txt
-echo 'if [ $(tty) == "/dev/tty1" ]; then ./updateContainer; fi' >> .bashrc
-touch .hushlogin
+echo 'if [ $(tty) == "/dev/tty1" ]; then ./updateContainer; fi' >> .bashrc #start het instel script na inloggen
+touch .hushlogin #versnelt het inloggen
 #---------------autorun upload every minute------------------
-crontab -l | { cat; echo "* * * * * /home/pi/upload"; } | crontab -
+crontab -l | { cat; echo "* * * * * /home/pi/upload"; } | crontab - #source: https://stackoverflow.com/a/879022/5981611
 #---------------lower sd write rate--------------------------
 echo 'tmpfs /tmp tmpfs defaults,size=30M 0 0' | sudo tee -a /etc/fstab >/dev/null
 sudo systemctl disable dphys-swapfile.service
