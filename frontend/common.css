@@ -147,7 +147,8 @@ body {
     font-size: 18px;
     padding: 15px;
     margin: 20px;
-    color:  rgb(23, 11, 44)
+    color:  rgb(23, 11, 44);
+	word-wrap: anywhere;
 
 }
 
