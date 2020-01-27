@@ -148,11 +148,12 @@ body {
     padding: 15px;
     margin: 20px;
     color:  rgb(23, 11, 44);
-	word-wrap: anywhere;
-
 }
 
 
+.containerNaam {
+	word-wrap: anywhere;
+}
 
 #list tr:nth-child(odd) {
     background-color: #dcd6eb;
