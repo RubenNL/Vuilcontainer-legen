@@ -233,7 +233,7 @@ span {
         "ft";
 
         grid-template-columns: 1fr;
-        grid-template-rows: 150px 50px auto 450px auto 150px;
+        grid-template-rows: auto 50px auto 450px auto 150px;
 
         grid-gap: 3px;
         padding: 5px;
