@@ -43,7 +43,7 @@ function updateContainers() {
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
 		$('#list').append(containers.map(function(container) {
 			addMarker(container.lat,container.lng,container.inhoud,container.adres,container.id)
-			return '<tr containerId="'+container.id+'"><td>'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
+			return '<tr containerId="'+container.id+'"><td class="containerNaam">'+container.adres+'</td><td>'+inhoudToString(container.inhoud)+'</td><td>'+container.updateTime+'</td></tr>'
 		}).join())
 	}) //met hulp van https://api.jquery.com/jQuery.get
 }
