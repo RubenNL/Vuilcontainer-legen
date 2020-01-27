@@ -20,7 +20,7 @@ body {
     "ft ft";
 
     grid-template-columns: minmax(auto,max-content) minmax(50%,auto);
-    grid-template-rows: 180px 50px minmax(350px,auto) min-content 0px 180px;
+    grid-template-rows: 180px 50px minmax(350px,auto) min-content auto 180px;
 
     grid-gap: 3px;
     padding:  2rem 4rem 2rem 4rem;
