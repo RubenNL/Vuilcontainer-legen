@@ -1,5 +1,5 @@
 serverUrl='/nodejs'
-maxBounds=[[52.030854,4.981787],[52.142064,5.1911489]]
+//maxBounds=[[52.030854,4.981787],[52.142064,5.1911489]]
 L.mapquest.key = 'hU15IN5Tl6oAibfsQy7l8ErOAnsmWqWL';
 markers={}
 function view(latlng) {
@@ -51,8 +51,8 @@ map = L.mapquest.map('map', {
 	center: [52.086459,5.086467],
 	zoom: 11,
 	layers: L.mapquest.tileLayer('map'),
-	preferCanvas: true,//source:https://stackoverflow.com/a/43019740
-	maxBounds:maxBounds
+	preferCanvas: true//,//source:https://stackoverflow.com/a/43019740
+//	maxBounds:maxBounds
 }); //source: https://developer.mapquest.com/
 setTimeout(function () {
 	if($('#map').height()==0) {
