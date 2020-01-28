@@ -35,11 +35,11 @@ function addMarker(lat,lng,inhoud,adres,id) {
 	markers[id]=marker;
 }
 function updateContainers() {
-	Object.keys(markers).forEach(function (id) {
-		map.removeLayer(markers[id]);
-	})
-	markers={}
 	$.get(serverUrl,function (containers) {
+		Object.keys(markers).forEach(function (id) {
+			map.removeLayer(markers[id]);
+		})
+		markers={}
 		$('#list').html('<tr><th>Adres</th><th>Inhoud</th><th>laatst geupdate</th></tr>')
 		$('#list').append(containers.map(function(container) {
 			addMarker(container.lat,container.lng,container.inhoud,container.adres,container.id)
@@ -66,3 +66,4 @@ updateContainers()
 /*
  * In dit bestand is veel gebruik gemaakt van https://leafletjs.com/reference-1.6.0.html
  */
+setInterval(updateContainers,10000) //Dit is alleen voor de demo
